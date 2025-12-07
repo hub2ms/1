@@ -62,14 +62,15 @@
             color: #2563eb;
         }
 
-        /* Multi-color Dynamic Title & Text Animation */
-        .dynamic-title, .dynamic-text-highlight {
+        /* Multi-color Dynamic Title & Text Animation (Rainbow) */
+        .dynamic-text-highlight {
             background: linear-gradient(to right, #ef5350, #ab47bc, #2196f3, #009688, #ffeb3b, #ff9800, #f44336);
             background-size: 300% 100%;
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             animation: rainbow_move 4s linear infinite;
+            font-weight: 700;
         }
         @keyframes rainbow_move {
             0% { background-position: 0% 50%; }
@@ -83,7 +84,7 @@
             overflow: hidden;
             border-radius: 1rem;
             background: white;
-            padding: 3px; /* Creates the border width space */
+            padding: 4px; /* Border thickness */
         }
         /* The rotating gradient background */
         .rainbow-border-box::before {
@@ -97,13 +98,13 @@
             background: conic-gradient(
                 #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8f00ff, #ff0000
             );
-            animation: rotate 4s linear infinite;
+            animation: rotate 3s linear infinite;
         }
         
         /* The inner content container */
         .rainbow-inner {
             background: white;
-            border-radius: calc(1rem - 3px);
+            border-radius: calc(1rem - 4px);
             height: 100%;
             width: 100%;
             position: relative;
@@ -143,17 +144,31 @@
             color: #475569;
         }
         
-        /* Calculator Card Style - Static Borders applied inline via JS/HTML classes */
+        /* Calculator Card Style - Static Borders applied inline/via classes */
         .calc-card {
             background: white;
             padding: 1.5rem;
             border-radius: 1rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
-            border-width: 2px;
+            border-width: 3px;
             border-style: solid;
         }
         .calc-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* Testimonial Card Style - Static Borders */
+        .testimonial-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-width: 3px;
+            border-style: solid;
+            transition: transform 0.3s ease;
+        }
+        .testimonial-card:hover {
             transform: translateY(-5px);
         }
     </style>
@@ -167,7 +182,8 @@
                 <!-- Logo / Company Name Area -->
                 <div class="flex flex-col cursor-pointer group nav-item-dynamic" onclick="switchTab('home')">
                     <h1 class="text-2xl font-bold text-black leading-none tracking-tight group-hover:text-blue-700 transition-colors duration-500">MOONSHOT FINSERV</h1>
-                    <p class="text-sm text-blue-600 font-medium mt-1">Your Empathic Mutual Fund Partner</p>
+                    <!-- Dynamic Multi-Color Subheading -->
+                    <p class="text-sm font-medium mt-1 dynamic-text-highlight">Your Empathic Mutual Fund Partner</p>
                 </div>
 
                 <!-- Desktop Menu -->
@@ -221,7 +237,7 @@
 
                     <!-- Google Form Section with Dynamic Title -->
                     <div class="w-full max-w-4xl mx-auto">
-                        <h2 class="text-3xl md:text-4xl font-extrabold mb-8 dynamic-title inline-block">
+                        <h2 class="text-3xl md:text-4xl font-extrabold mb-8 dynamic-text-highlight inline-block">
                             Check Your Family's Financial Security Score
                         </h2>
                         <div class="relative w-full overflow-hidden rounded-xl shadow-lg border-2 border-blue-100 bg-white">
@@ -245,7 +261,6 @@
                     <!-- Left: Portrait Image (Centered Middle, No Caption) -->
                     <div class="flex justify-center h-full items-center">
                         <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white max-w-sm w-full transition-transform hover:scale-105 duration-500">
-                            <!-- Attempting to use .png as requested, fallback to jpg -->
                             <img src="Moonshot_Portrait.png" alt="Moonshot Finserv" class="w-full h-auto object-cover" onerror="this.src='Moonshot_Portrait.jpg'"> 
                         </div>
                     </div>
@@ -306,8 +321,8 @@
                 </div>
                 
                 <div class="grid lg:grid-cols-2 gap-8" id="calculator-grid">
-                    <!-- Step Up SIP (Border Blue) -->
-                    <div class="calc-card border-blue-300" id="card-stepup">
+                    <!-- Step Up SIP (Static Border: Blue) -->
+                    <div class="calc-card border-blue-400" id="card-stepup">
                         <div class="flex items-center gap-3 mb-6 border-b pb-4">
                             <div class="p-3 bg-blue-100 rounded-lg text-blue-600"><i class="fas fa-chart-line text-xl"></i></div>
                             <h3 class="text-xl font-bold calc-title">Step-Up SIP Calculator</h3>
@@ -334,8 +349,8 @@
                         </div>
                     </div>
 
-                    <!-- Lumpsum (Border Purple) -->
-                    <div class="calc-card border-purple-300" id="card-lumpsum">
+                    <!-- Lumpsum (Static Border: Purple) -->
+                    <div class="calc-card border-purple-400" id="card-lumpsum">
                         <div class="flex items-center gap-3 mb-6 border-b pb-4">
                             <div class="p-3 bg-purple-100 rounded-lg text-purple-600"><i class="fas fa-money-bill-wave text-xl"></i></div>
                             <h3 class="text-xl font-bold calc-title">Lumpsum Calculator</h3>
@@ -392,7 +407,7 @@
                             <!-- View only Text - No Link -->
                             <div class="block">
                                 <p class="text-sm text-slate-500 mb-2">AMFI Registration Number (ARN)</p>
-                                <!-- Highlighted ARN Number -->
+                                <!-- Highlighted ARN Number with dynamic multi-color -->
                                 <h3 class="text-4xl font-bold dynamic-text-highlight">308898</h3>
                             </div>
                         </div>
@@ -411,7 +426,7 @@
         <!-- CAREER PAGE -->
         <div id="career" class="tab-content animate-fade-in">
             <div class="max-w-3xl mx-auto px-4 py-16">
-                <!-- Rainbow Border Box -->
+                <!-- Rainbow Border Box (Always Active) -->
                 <div class="rainbow-border-box">
                     <div class="rainbow-inner p-8 md:p-12 text-center h-full">
                         <div class="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
@@ -434,34 +449,35 @@
         <!-- CONTACT PAGE -->
         <div id="contact" class="tab-content animate-fade-in">
             <div class="max-w-7xl mx-auto px-4 py-16">
-                <!-- Rainbow Border Box -->
+                <!-- Rainbow Border Box (Always Active) -->
                 <div class="rainbow-border-box">
                     <div class="rainbow-inner p-8 lg:p-12">
                         <h2 class="text-3xl font-bold mb-8 text-center">Get in Touch</h2>
                         
-                        <div class="flex flex-col items-center gap-8">
-                            <div class="text-center space-y-2">
+                        <div class="flex flex-col items-center gap-8 text-center">
+                            <div class="space-y-2">
                                 <i class="fas fa-envelope text-red-500 text-3xl mb-2"></i>
                                 <p class="text-sm text-slate-500 font-medium">Email Us</p>
                                 <a href="mailto:hub2ms@gmail.com" class="text-lg font-bold text-black hover:text-blue-600 transition">hub2ms@gmail.com</a>
                             </div>
 
-                            <div class="text-center space-y-2">
+                            <div class="space-y-2">
                                 <i class="fas fa-phone-alt text-green-600 text-3xl mb-2"></i>
                                 <p class="text-sm text-slate-500 font-medium">Call Us</p>
                                 <a href="tel:8939124816" class="text-lg font-bold text-black hover:text-blue-600 transition">8939 124 816</a>
                             </div>
 
-                            <div class="text-center space-y-2">
+                            <div class="space-y-2">
                                 <i class="fab fa-whatsapp text-green-500 text-4xl mb-2"></i>
                                 <p class="text-sm text-slate-500 font-medium">Chat with us</p>
                                 <a href="https://wa.me/+918939124816" target="_blank" class="text-lg font-bold text-black hover:text-blue-600 transition">WhatsApp Now</a>
                             </div>
 
-                            <div class="text-center space-y-2">
+                            <div class="space-y-2">
                                 <i class="fas fa-map-marker-alt text-blue-600 text-3xl mb-2"></i>
                                 <p class="text-sm text-slate-500 font-medium">Location</p>
                                 <p class="text-lg font-bold text-black">Erode, India</p>
+                                <!-- Map text link only, no preview -->
                                 <a href="https://maps.app.goo.gl/QnLKbGPgBcz7G2C6A" target="_blank" class="inline-flex items-center gap-2 mt-1 text-sm font-semibold text-blue-600 hover:underline">
                                     <i class="fas fa-external-link-alt"></i> Visit office (Maps)
                                 </a>
@@ -730,7 +746,7 @@
             });
         }
 
-        // --- 20 Testimonials Data (Specific names and locations) ---
+        // --- 20 Testimonials Data (Specific names and locations with unique static borders) ---
         const testimonials = [
             { name: "Mythili", loc: "Erode", msg: "Moonshot Finserv helped me plan my finances better.", rating: 5, border: 'border-red-200' },
             { name: "Prathikshaa", loc: "Erode", msg: "Professional and trustworthy advice for my investments.", rating: 5, border: 'border-orange-200' },
@@ -757,18 +773,20 @@
         function renderTestimonials() {
             const container = document.getElementById('testimonials-grid');
             container.innerHTML = testimonials.map(t => `
-                <div class="bg-white p-6 rounded-xl shadow-md ${t.border} border-2 hover:shadow-lg transition-shadow duration-300">
-                    <div class="flex text-yellow-400 mb-3">
-                        ${'<i class="fas fa-star"></i>'.repeat(t.rating)}
-                    </div>
-                    <p class="text-slate-600 mb-4 italic">"${t.msg}"</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center font-bold text-slate-600">
-                            ${t.name.charAt(0)}
+                <div class="bg-white p-6 rounded-xl shadow-md ${t.border} border-2 hover:shadow-lg transition-shadow duration-300 testimonial-card">
+                    <div class="h-full bg-white rounded-xl p-4">
+                        <div class="flex text-yellow-400 mb-3">
+                            ${'<i class="fas fa-star"></i>'.repeat(t.rating)}
                         </div>
-                        <div>
-                            <p class="font-bold text-black text-sm">${t.name}</p>
-                            <p class="text-xs text-slate-500"><i class="fas fa-map-marker-alt mr-1"></i>${t.loc}</p>
+                        <p class="text-slate-600 mb-4 italic">"${t.msg}"</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center font-bold text-slate-600">
+                                ${t.name.charAt(0)}
+                            </div>
+                            <div>
+                                <p class="font-bold text-black text-sm">${t.name}</p>
+                                <p class="text-xs text-slate-500"><i class="fas fa-map-marker-alt mr-1"></i>${t.loc}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
