@@ -16,12 +16,36 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* --- CSS Variables for Theme --- */
+        :root {
+            --bg-color: #fafaf9;
+            --text-color: #000000;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --nav-bg: #ffffff;
+            --nav-text: #000000;
+            --footer-bg: #000000;
+            --footer-text: #ffffff;
+        }
+
+        body.dark-mode {
+            --bg-color: #0f172a;
+            --text-color: #f1f5f9;
+            --card-bg: #1e293b;
+            --card-border: #334155;
+            --nav-bg: #1e293b;
+            --nav-text: #f1f5f9;
+            --footer-bg: #020617;
+            --footer-text: #94a3b8;
+        }
+
         /* Global Settings */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #fafaf9; /* Mild stone color */
-            color: #000000;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         /* Animations */
@@ -39,6 +63,7 @@
             position: relative;
             transition: transform 0.1s ease-out, color 0.3s;
             will-change: transform;
+            color: var(--nav-text);
         }
         .nav-link:hover {
             transform: translateY(-3px) scale(1.05);
@@ -62,7 +87,7 @@
             color: #2563eb;
         }
 
-        /* Multi-color Dynamic Title & Text Animation (Rainbow) */
+        /* Multi-color Dynamic Text Animation (Rainbow) */
         .dynamic-text-highlight {
             background: linear-gradient(to right, #ef5350, #ab47bc, #2196f3, #009688, #ffeb3b, #ff9800, #f44336);
             background-size: 300% 100%;
@@ -83,7 +108,7 @@
             z-index: 0;
             overflow: hidden;
             border-radius: 1rem;
-            background: white;
+            background: var(--card-bg);
             padding: 4px; /* Border thickness */
         }
         /* The rotating gradient background */
@@ -103,12 +128,13 @@
         
         /* The inner content container */
         .rainbow-inner {
-            background: white;
+            background: var(--card-bg);
             border-radius: calc(1rem - 4px);
             height: 100%;
             width: 100%;
             position: relative;
             z-index: 1;
+            transition: background-color 0.3s;
         }
 
         @keyframes rotate {
@@ -127,10 +153,12 @@
         .input-field {
             width: 100%;
             padding: 0.5rem 0.75rem;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--card-border);
             border-radius: 0.5rem;
             outline: none;
             transition: border-color 0.3s;
+            background-color: var(--card-bg);
+            color: var(--text-color);
         }
         .input-field:focus {
             border-color: #2563eb;
@@ -141,49 +169,56 @@
             font-size: 0.875rem;
             font-weight: 500;
             margin-bottom: 0.25rem;
-            color: #475569;
+            color: var(--text-color);
+            opacity: 0.8;
         }
         
-        /* Calculator Card Style - Static Borders applied inline/via classes */
-        .calc-card {
-            background: white;
+        /* Calculator & Testimonial Card Style - Static Borders */
+        .calc-card, .testimonial-card {
+            background: var(--card-bg);
             padding: 1.5rem;
             border-radius: 1rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, background-color 0.3s;
             border-width: 3px;
             border-style: solid;
         }
-        .calc-card:hover {
+        .calc-card:hover, .testimonial-card:hover {
             transform: translateY(-5px);
         }
-        
-        /* Testimonial Card Style - Static Borders */
-        .testimonial-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border-width: 3px;
-            border-style: solid;
-            transition: transform 0.3s ease;
+
+        /* Nav & Footer Theme Colors */
+        nav { background-color: var(--nav-bg) !important; }
+        footer { background-color: var(--footer-bg) !important; color: var(--footer-text) !important; }
+        .theme-toggle-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--nav-text);
+            padding: 0.5rem;
+            transition: transform 0.3s;
         }
-        .testimonial-card:hover {
-            transform: translateY(-5px);
-        }
+        .theme-toggle-btn:hover { transform: rotate(45deg); }
+
+        /* Dark mode overrides for specific text colors in cards */
+        body.dark-mode .text-slate-600 { color: #cbd5e1; }
+        body.dark-mode .text-slate-700 { color: #e2e8f0; }
+        body.dark-mode .text-slate-800 { color: #f8fafc; }
+        body.dark-mode .text-black { color: #ffffff; }
     </style>
 </head>
 <body class="bg-stone-50 text-black flex flex-col min-h-screen font-inter" onmousemove="animateMenu(event)">
 
     <!-- Navigation -->
-    <nav class="bg-white shadow-md sticky top-0 z-50 transition-all duration-300">
+    <nav class="shadow-md sticky top-0 z-50 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-24 items-center">
                 <!-- Logo / Company Name Area -->
                 <div class="flex flex-col cursor-pointer group nav-item-dynamic" onclick="switchTab('home')">
-                    <h1 class="text-2xl font-bold text-black leading-none tracking-tight group-hover:text-blue-700 transition-colors duration-500">MOONSHOT FINSERV</h1>
-                    <!-- Dynamic Multi-Color Subheading -->
-                    <p class="text-sm font-medium mt-1 dynamic-text-highlight">Your Empathic Mutual Fund Partner</p>
+                    <h1 class="text-2xl font-bold leading-none tracking-tight transition-colors duration-500" style="color: inherit;">MOONSHOT FINSERV</h1>
+                    <!-- Dynamic Multi-Color Subheading (Always Highlighted) -->
+                    <p class="text-sm font-medium mt-1 dynamic-text-highlight"> Your Empathic Mutual Fund Partner</p>
                 </div>
 
                 <!-- Desktop Menu -->
@@ -195,26 +230,34 @@
                     <button onclick="switchTab('compliance')" class="nav-link font-medium py-2 nav-item-dynamic">Compliance</button>
                     <button onclick="switchTab('career')" class="nav-link font-medium py-2 nav-item-dynamic">Career</button>
                     <button onclick="switchTab('contact')" class="nav-link font-medium py-2 nav-item-dynamic">Contact</button>
+                    
+                    <!-- Dark/Light Mode Toggle -->
+                    <button onclick="toggleTheme()" class="theme-toggle-btn nav-item-dynamic" title="Toggle Theme">
+                        <i class="fas fa-moon" id="theme-icon"></i>
+                    </button>
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <div class="lg:hidden flex items-center">
-                    <button onclick="toggleMobileMenu()" class="text-black p-2 hover:bg-slate-100 rounded-lg transition-colors">
+                <div class="lg:hidden flex items-center gap-4">
+                    <button onclick="toggleTheme()" class="theme-toggle-btn" title="Toggle Theme">
+                        <i class="fas fa-moon" id="theme-icon-mobile"></i>
+                    </button>
+                    <button onclick="toggleMobileMenu()" class="text-current p-2 hover:bg-opacity-10 rounded-lg transition-colors">
                         <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
             </div>
         </div>
         <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-slate-100 shadow-xl">
+        <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-slate-800 border-t border-slate-100 dark:border-slate-700 shadow-xl">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <button onclick="switchTab('home'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-slate-50 rounded-md font-medium">Home</button>
-                <button onclick="switchTab('about'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-slate-50 rounded-md font-medium">About</button>
-                <button onclick="switchTab('calculators'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-slate-50 rounded-md font-medium">Calculators</button>
-                <button onclick="switchTab('customers'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-slate-50 rounded-md font-medium">Customers</button>
-                <button onclick="switchTab('compliance'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-slate-50 rounded-md font-medium">Compliance</button>
-                <button onclick="switchTab('career'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-slate-50 rounded-md font-medium">Career</button>
-                <button onclick="switchTab('contact'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-slate-50 rounded-md font-medium">Contact</button>
+                <button onclick="switchTab('home'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-opacity-10 rounded-md font-medium">Home</button>
+                <button onclick="switchTab('about'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-opacity-10 rounded-md font-medium">About</button>
+                <button onclick="switchTab('calculators'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-opacity-10 rounded-md font-medium">Calculators</button>
+                <button onclick="switchTab('customers'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-opacity-10 rounded-md font-medium">Customers</button>
+                <button onclick="switchTab('compliance'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-opacity-10 rounded-md font-medium">Compliance</button>
+                <button onclick="switchTab('career'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-opacity-10 rounded-md font-medium">Career</button>
+                <button onclick="switchTab('contact'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-opacity-10 rounded-md font-medium">Contact</button>
             </div>
         </div>
     </nav>
@@ -224,7 +267,7 @@
         
         <!-- HOME PAGE -->
         <div id="home" class="tab-content active animate-fade-in">
-            <div class="flex flex-col items-center justify-center min-h-screen bg-white py-12">
+            <div class="flex flex-col items-center justify-center min-h-screen py-12">
                 <div class="max-w-6xl w-full px-4 text-center">
                     
                     <!-- Video Section -->
@@ -253,7 +296,7 @@
         <div id="about" class="tab-content animate-fade-in">
             <div class="max-w-7xl mx-auto px-4 py-16">
                 <div class="text-center mb-12">
-                    <h2 class="text-4xl font-bold text-black mb-4">About Moonshot Finserv</h2>
+                    <h2 class="text-4xl font-bold mb-4" style="color: var(--text-color);">About Moonshot Finserv</h2>
                     <div class="w-24 h-1 bg-blue-600 mx-auto rounded-full"></div>
                 </div>
 
@@ -261,6 +304,7 @@
                     <!-- Left: Portrait Image (Centered Middle, No Caption) -->
                     <div class="flex justify-center h-full items-center">
                         <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white max-w-sm w-full transition-transform hover:scale-105 duration-500">
+                            <!-- Using png first as requested, fallback to jpg -->
                             <img src="Moonshot_Portrait.png" alt="Moonshot Finserv" class="w-full h-auto object-cover" onerror="this.src='Moonshot_Portrait.jpg'"> 
                         </div>
                     </div>
@@ -269,19 +313,19 @@
                     <div class="space-y-8">
                         
                         <!-- 1. Purpose -->
-                        <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-blue-500 hover:shadow-xl transition-all">
-                            <h3 class="text-xl font-bold text-slate-800 mb-2">OUR PURPOSE</h3>
-                            <p class="text-lg text-slate-700 italic">"We guide your family financially."</p>
-                            <p class="text-lg text-slate-700 italic">"Dream big, yet start smart."</p>
+                        <div class="calc-card border-blue-300">
+                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-color);">OUR PURPOSE</h3>
+                            <p class="text-lg italic" style="color: var(--text-color);">"We guide your family financially."</p>
+                            <p class="text-lg italic" style="color: var(--text-color);">"Dream big, yet start smart."</p>
                         </div>
 
                         <!-- 2. Vision -->
-                        <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-purple-500 hover:shadow-xl transition-all">
-                            <h3 class="text-xl font-bold text-slate-800 mb-4">OUR VISION</h3>
-                            <p class="text-lg text-slate-700 mb-4 italic">"To empower clients to achieve financial goals through mutual fund investment."</p>
+                        <div class="calc-card border-purple-300">
+                            <h3 class="text-xl font-bold mb-4" style="color: var(--text-color);">OUR VISION</h3>
+                            <p class="text-lg mb-4 italic" style="color: var(--text-color);">"To empower clients to achieve financial goals through mutual fund investment."</p>
                             
                             <!-- Vision Goals Icons (Italic text) -->
-                            <div class="grid grid-cols-2 gap-4 text-sm italic text-slate-600">
+                            <div class="grid grid-cols-2 gap-4 text-sm italic" style="color: var(--text-color);">
                                 <div class="flex items-center gap-2"><i class="fas fa-car text-red-500"></i> New Vehicle</div>
                                 <div class="flex items-center gap-2"><i class="fas fa-home text-green-500"></i> Dream Home</div>
                                 <div class="flex items-center gap-2"><i class="fas fa-graduation-cap text-blue-500"></i> Children's Education</div>
@@ -293,9 +337,9 @@
                         </div>
 
                         <!-- 3. Mission -->
-                        <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-yellow-500 hover:shadow-xl transition-all">
-                            <h3 class="text-xl font-bold text-slate-800 mb-2">OUR MISSION</h3>
-                            <p class="text-xl text-slate-800 italic">"To be client's Empathic Mutual Fund Partner in balancing Risk and Reward."</p>
+                        <div class="calc-card border-yellow-300">
+                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-color);">OUR MISSION</h3>
+                            <p class="text-xl italic" style="color: var(--text-color);">"To be client's Empathic Mutual Fund Partner in balancing Risk and Reward."</p>
                         </div>
 
                         <!-- 4. Why Choose Us -->
@@ -316,16 +360,16 @@
         <div id="calculators" class="tab-content animate-fade-in">
             <div class="max-w-7xl mx-auto px-4 py-12">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-black mb-4">Financial Calculators</h2>
-                    <p class="text-slate-600">Plan your future. Enter your name to download your plan.</p>
+                    <h2 class="text-3xl font-bold mb-4" style="color: var(--text-color);">Financial Calculators</h2>
+                    <p style="color: var(--text-color); opacity: 0.8;">Plan your future. Enter your name to download your plan.</p>
                 </div>
                 
                 <div class="grid lg:grid-cols-2 gap-8" id="calculator-grid">
                     <!-- Step Up SIP (Static Border: Blue) -->
                     <div class="calc-card border-blue-400" id="card-stepup">
-                        <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                        <div class="flex items-center gap-3 mb-6 border-b pb-4 border-slate-200 dark:border-slate-700">
                             <div class="p-3 bg-blue-100 rounded-lg text-blue-600"><i class="fas fa-chart-line text-xl"></i></div>
-                            <h3 class="text-xl font-bold calc-title">Step-Up SIP Calculator</h3>
+                            <h3 class="text-xl font-bold calc-title" style="color: var(--text-color);">Step-Up SIP Calculator</h3>
                         </div>
                         <div class="calc-content grid md:grid-cols-2 gap-6">
                             <div class="inputs space-y-3">
@@ -333,15 +377,15 @@
                                 <div><label>Annual Step-Up (%)</label><input type="number" id="step-stepup" value="10" class="input-field" oninput="calcStepUp()"></div>
                                 <div><label>Return Rate (%)</label><input type="number" id="rate-stepup" value="12" class="input-field" oninput="calcStepUp()"></div>
                                 <div><label>Duration (Years)</label><input type="number" id="time-stepup" value="15" class="input-field" oninput="calcStepUp()"></div>
-                                <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 mt-2">
-                                    <label class="text-xs font-bold text-slate-500 uppercase">To Download Plan:</label>
+                                <div class="p-3 rounded-lg border border-slate-200 dark:border-slate-700 mt-2" style="background-color: var(--bg-color);">
+                                    <label class="text-xs font-bold uppercase">To Download Plan:</label>
                                     <input type="text" id="name-stepup" placeholder="Your Name (Required)" class="input-field mb-2 text-sm">
                                 </div>
                             </div>
                             <div class="results flex flex-col items-center justify-center">
                                 <div class="w-40 h-40 mb-4"><canvas id="chart-stepup"></canvas></div>
                                 <div class="text-center w-full">
-                                    <p class="text-sm text-slate-500">Maturity Value</p>
+                                    <p class="text-sm" style="color: var(--text-color); opacity: 0.7;">Maturity Value</p>
                                     <p class="text-2xl font-bold text-green-600" id="res-stepup">₹0</p>
                                     <button onclick="downloadCard('card-stepup', 'name-stepup', 'Step-Up SIP Plan', 'fas fa-chart-line')" class="download-btn mt-4 w-full bg-black text-white py-2 rounded-lg hover:bg-slate-800 transition text-sm"><i class="fas fa-download mr-2"></i>Download Plan</button>
                                 </div>
@@ -351,24 +395,24 @@
 
                     <!-- Lumpsum (Static Border: Purple) -->
                     <div class="calc-card border-purple-400" id="card-lumpsum">
-                        <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                        <div class="flex items-center gap-3 mb-6 border-b pb-4 border-slate-200 dark:border-slate-700">
                             <div class="p-3 bg-purple-100 rounded-lg text-purple-600"><i class="fas fa-money-bill-wave text-xl"></i></div>
-                            <h3 class="text-xl font-bold calc-title">Lumpsum Calculator</h3>
+                            <h3 class="text-xl font-bold calc-title" style="color: var(--text-color);">Lumpsum Calculator</h3>
                         </div>
                         <div class="calc-content grid md:grid-cols-2 gap-6">
                             <div class="inputs space-y-3">
                                 <div><label>Total Investment (₹)</label><input type="number" id="inv-lumpsum" value="100000" class="input-field" oninput="calcLumpsum()"></div>
                                 <div><label>Return Rate (%)</label><input type="number" id="rate-lumpsum" value="12" class="input-field" oninput="calcLumpsum()"></div>
                                 <div><label>Duration (Years)</label><input type="number" id="time-lumpsum" value="10" class="input-field" oninput="calcLumpsum()"></div>
-                                <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 mt-2">
-                                    <label class="text-xs font-bold text-slate-500 uppercase">To Download Plan:</label>
+                                <div class="p-3 rounded-lg border border-slate-200 dark:border-slate-700 mt-2" style="background-color: var(--bg-color);">
+                                    <label class="text-xs font-bold uppercase">To Download Plan:</label>
                                     <input type="text" id="name-lumpsum" placeholder="Your Name (Required)" class="input-field mb-2 text-sm">
                                 </div>
                             </div>
                             <div class="results flex flex-col items-center justify-center">
                                 <div class="w-40 h-40 mb-4"><canvas id="chart-lumpsum"></canvas></div>
                                 <div class="text-center w-full">
-                                    <p class="text-sm text-slate-500">Maturity Value</p>
+                                    <p class="text-sm" style="color: var(--text-color); opacity: 0.7;">Maturity Value</p>
                                     <p class="text-2xl font-bold text-green-600" id="res-lumpsum">₹0</p>
                                     <button onclick="downloadCard('card-lumpsum', 'name-lumpsum', 'Lumpsum Plan', 'fas fa-money-bill-wave')" class="download-btn mt-4 w-full bg-black text-white py-2 rounded-lg hover:bg-slate-800 transition text-sm"><i class="fas fa-download mr-2"></i>Download Plan</button>
                                 </div>
@@ -385,8 +429,8 @@
         <div id="customers" class="tab-content animate-fade-in">
             <div class="max-w-7xl mx-auto px-4 py-16">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl font-bold text-black mb-4">Client Testimonials</h2>
-                    <p class="text-slate-600">Stories of trust from across India</p>
+                    <h2 class="text-3xl font-bold mb-4" style="color: var(--text-color);">Client Testimonials</h2>
+                    <p style="color: var(--text-color); opacity: 0.8;">Stories of trust from across India</p>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="testimonials-grid">
                     <!-- Testimonials injected by JS -->
@@ -397,16 +441,16 @@
         <!-- COMPLIANCE PAGE -->
         <div id="compliance" class="tab-content animate-fade-in">
             <div class="max-w-4xl mx-auto px-4 py-16">
-                <div class="bg-white rounded-2xl shadow-xl overflow-hidden mb-12 border border-slate-100">
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden mb-12 border border-slate-100 dark:border-slate-700">
                     <div class="bg-slate-900 text-white p-6 text-center">
                         <h2 class="text-2xl font-bold">Regulatory Compliance</h2>
                     </div>
-                    <div class="p-8 text-center">
-                        <p class="text-lg mb-6">We are a fully compliant AMFI registered Mutual Fund Distributor.</p>
-                        <div class="inline-block bg-slate-100 rounded-lg p-6 border-2 border-slate-200">
+                    <div class="p-8 text-center" style="background-color: var(--card-bg);">
+                        <p class="text-lg mb-6" style="color: var(--text-color);">We are a fully compliant AMFI registered Mutual Fund Distributor.</p>
+                        <div class="inline-block rounded-lg p-6 border-2 border-slate-200 dark:border-slate-700" style="background-color: var(--bg-color);">
                             <!-- View only Text - No Link -->
                             <div class="block">
-                                <p class="text-sm text-slate-500 mb-2">AMFI Registration Number (ARN)</p>
+                                <p class="text-sm mb-2" style="color: var(--text-color); opacity: 0.7;">AMFI Registration Number (ARN)</p>
                                 <!-- Highlighted ARN Number with dynamic multi-color -->
                                 <h3 class="text-4xl font-bold dynamic-text-highlight">308898</h3>
                             </div>
@@ -414,8 +458,8 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-2xl shadow-xl p-8 border border-slate-100">
-                    <h3 class="text-xl font-bold text-center mb-8 border-b pb-4">AMCs Supported</h3>
+                <div class="rounded-2xl shadow-xl p-8 border border-slate-100 dark:border-slate-700" style="background-color: var(--card-bg);">
+                    <h3 class="text-xl font-bold text-center mb-8 border-b pb-4 border-slate-200 dark:border-slate-700" style="color: var(--text-color);">AMCs Supported</h3>
                     <div class="flex justify-center">
                         <img src="AMFI_logos.jpg" alt="Supported AMCs" class="max-w-full h-auto rounded-lg hover:opacity-90 transition-opacity" onerror="this.src='https://placehold.co/800x400?text=All+Major+AMCs+Supported'">
                     </div>
@@ -432,13 +476,13 @@
                         <div class="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
                             <i class="fas fa-briefcase text-yellow-600 text-3xl"></i>
                         </div>
-                        <h2 class="text-3xl font-bold mb-4">Join Our Team</h2>
-                        <div class="text-slate-700 mb-8 font-bold text-lg leading-relaxed">
+                        <h2 class="text-3xl font-bold mb-4" style="color: var(--text-color);">Join Our Team</h2>
+                        <div class="mb-8 font-bold text-lg leading-relaxed" style="color: var(--text-color);">
                             <p>Passionate about wealth creation through mutual funds?</p>
                             <p class="text-blue-600 mt-1">Join Moonshot Finserv as an intern!</p>
                         </div>
-                        <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 hover:bg-slate-100 transition-colors">
-                            <h3 class="font-bold text-lg mb-2">Share your profile</h3>
+                        <div class="p-6 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" style="background-color: var(--bg-color);">
+                            <h3 class="font-bold text-lg mb-2" style="color: var(--text-color);">Share your profile</h3>
                             <a href="mailto:hub2ms@gmail.com" class="text-blue-600 font-bold text-xl hover:underline">hub2ms@gmail.com</a>
                         </div>
                     </div>
@@ -452,31 +496,31 @@
                 <!-- Rainbow Border Box (Always Active) -->
                 <div class="rainbow-border-box">
                     <div class="rainbow-inner p-8 lg:p-12">
-                        <h2 class="text-3xl font-bold mb-8 text-center">Get in Touch</h2>
+                        <h2 class="text-3xl font-bold mb-8 text-center" style="color: var(--text-color);">Get in Touch</h2>
                         
                         <div class="flex flex-col items-center gap-8 text-center">
                             <div class="space-y-2">
                                 <i class="fas fa-envelope text-red-500 text-3xl mb-2"></i>
-                                <p class="text-sm text-slate-500 font-medium">Email Us</p>
-                                <a href="mailto:hub2ms@gmail.com" class="text-lg font-bold text-black hover:text-blue-600 transition">hub2ms@gmail.com</a>
+                                <p class="text-sm font-medium" style="color: var(--text-color); opacity: 0.8;">Email Us</p>
+                                <a href="mailto:hub2ms@gmail.com" class="text-lg font-bold hover:text-blue-600 transition" style="color: var(--text-color);">hub2ms@gmail.com</a>
                             </div>
 
                             <div class="space-y-2">
                                 <i class="fas fa-phone-alt text-green-600 text-3xl mb-2"></i>
-                                <p class="text-sm text-slate-500 font-medium">Call Us</p>
-                                <a href="tel:8939124816" class="text-lg font-bold text-black hover:text-blue-600 transition">8939 124 816</a>
+                                <p class="text-sm font-medium" style="color: var(--text-color); opacity: 0.8;">Call Us</p>
+                                <a href="tel:8939124816" class="text-lg font-bold hover:text-blue-600 transition" style="color: var(--text-color);">8939 124 816</a>
                             </div>
 
                             <div class="space-y-2">
                                 <i class="fab fa-whatsapp text-green-500 text-4xl mb-2"></i>
-                                <p class="text-sm text-slate-500 font-medium">Chat with us</p>
-                                <a href="https://wa.me/+918939124816" target="_blank" class="text-lg font-bold text-black hover:text-blue-600 transition">WhatsApp Now</a>
+                                <p class="text-sm font-medium" style="color: var(--text-color); opacity: 0.8;">Chat with us</p>
+                                <a href="https://wa.me/+918939124816" target="_blank" class="text-lg font-bold hover:text-blue-600 transition" style="color: var(--text-color);">WhatsApp Now</a>
                             </div>
 
                             <div class="space-y-2">
                                 <i class="fas fa-map-marker-alt text-blue-600 text-3xl mb-2"></i>
-                                <p class="text-sm text-slate-500 font-medium">Location</p>
-                                <p class="text-lg font-bold text-black">Erode, India</p>
+                                <p class="text-sm font-medium" style="color: var(--text-color); opacity: 0.8;">Location</p>
+                                <p class="text-lg font-bold" style="color: var(--text-color);">Erode, India</p>
                                 <!-- Map text link only, no preview -->
                                 <a href="https://maps.app.goo.gl/QnLKbGPgBcz7G2C6A" target="_blank" class="inline-flex items-center gap-2 mt-1 text-sm font-semibold text-blue-600 hover:underline">
                                     <i class="fas fa-external-link-alt"></i> Visit office (Maps)
@@ -491,13 +535,13 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-black text-white mt-auto relative">
+    <footer class="mt-auto relative">
         <div class="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6">
                 
                 <div class="text-center md:text-left">
-                    <h3 class="text-2xl font-bold text-white mb-2">MOONSHOT FINSERV</h3>
-                    <p class="text-slate-400 text-sm">Empowering your financial journey.</p>
+                    <h3 class="text-2xl font-bold mb-2">MOONSHOT FINSERV</h3>
+                    <p class="text-sm opacity-80">Empowering your financial journey.</p>
                 </div>
 
                 <div class="flex gap-6">
@@ -514,11 +558,11 @@
             </div>
             
             <div class="mt-8 pt-8 border-t border-slate-800 text-center">
-                <div class="text-slate-500 text-xs mb-4">
+                <div class="text-xs mb-4 opacity-70">
                     <p class="mb-2">AMFI Registered Mutual Fund Distributor | ARN: 308898</p>
                     <p>Mutual Fund investments are subject to market risks, read all scheme related documents carefully. The NAVs of the schemes may go up or down depending upon the factors and forces affecting the securities market including the fluctuations in the interest rates. The past performance of the mutual funds is not necessarily indicative of future performance of the schemes.</p>
                 </div>
-                <p class="text-slate-600 text-xs">&copy; 2024 Moonshot Finserv. All rights reserved.</p>
+                <p class="text-xs opacity-80">&copy; 2024 Moonshot Finserv. All rights reserved.</p>
                 
                 <!-- Visitor Counter -->
                 <div class="mt-6 flex justify-end items-center opacity-70 hover:opacity-100 transition-opacity">
@@ -532,6 +576,22 @@
 
     <!-- Logic -->
     <script>
+        // --- Theme Toggling ---
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+            const icon = document.getElementById('theme-icon');
+            const iconMobile = document.getElementById('theme-icon-mobile');
+            
+            if (body.classList.contains('dark-mode')) {
+                if(icon) icon.className = 'fas fa-sun text-yellow-400';
+                if(iconMobile) iconMobile.className = 'fas fa-sun text-yellow-400';
+            } else {
+                if(icon) icon.className = 'fas fa-moon';
+                if(iconMobile) iconMobile.className = 'fas fa-moon';
+            }
+        }
+
         // --- Navigation Logic (With Slow Motion Effect) ---
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -644,25 +704,25 @@
             goalCalculators.forEach(goal => {
                 const html = `
                 <div class="calc-card ${goal.border}" id="card-${goal.id}">
-                    <div class="flex items-center gap-3 mb-6 border-b pb-4">
-                        <div class="p-3 ${goal.bg} rounded-lg ${goal.color}"><i class="fas ${goal.icon} text-xl"></i></div>
-                        <h3 class="text-xl font-bold calc-title">${goal.title}</h3>
+                    <div class="flex items-center gap-3 mb-6 border-b pb-4 border-slate-200 dark:border-slate-700">
+                        <div class="p-3 rounded-lg" style="background-color: ${goal.bg === 'bg-red-100' ? '#fee2e2' : goal.bg === 'bg-green-100' ? '#dcfce7' : goal.bg === 'bg-blue-100' ? '#dbeafe' : '#fce7f3'}; color: ${goal.color === 'text-red-600' ? '#dc2626' : goal.color === 'text-green-600' ? '#16a34a' : goal.color === 'text-blue-600' ? '#2563eb' : '#db2777'}"><i class="fas ${goal.icon} text-xl"></i></div>
+                        <h3 class="text-xl font-bold calc-title" style="color: var(--text-color);">${goal.title}</h3>
                     </div>
                     <div class="calc-content grid md:grid-cols-2 gap-6">
                         <div class="inputs space-y-3">
                             <div><label>Current Cost (₹)</label><input type="number" id="cost-${goal.id}" value="${goal.cost}" class="input-field" oninput="calcGoal('${goal.id}')"></div>
                             <div><label>Inflation (%)</label><input type="number" id="inf-${goal.id}" value="6" class="input-field" oninput="calcGoal('${goal.id}')"></div>
                             <div><label>Years to Goal</label><input type="number" id="time-${goal.id}" value="${goal.years}" class="input-field" oninput="calcGoal('${goal.id}')"></div>
-                            <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 mt-2">
-                                <label class="text-xs font-bold text-slate-500 uppercase">To Download Plan:</label>
+                            <div class="p-3 rounded-lg border border-slate-200 dark:border-slate-700 mt-2" style="background-color: var(--bg-color);">
+                                <label class="text-xs font-bold uppercase">To Download Plan:</label>
                                 <input type="text" id="name-${goal.id}" placeholder="Your Name (Required)" class="input-field mb-2 text-sm">
                             </div>
                         </div>
                         <div class="results flex flex-col items-center justify-center">
                             <div class="w-40 h-40 mb-4"><canvas id="chart-${goal.id}"></canvas></div>
                             <div class="text-center w-full">
-                                <p class="text-sm text-slate-500">Future Cost</p>
-                                <p class="text-2xl font-bold text-slate-800" id="res-${goal.id}">₹0</p>
+                                <p class="text-sm" style="color: var(--text-color); opacity: 0.7;">Future Cost</p>
+                                <p class="text-2xl font-bold" style="color: ${goal.color === 'text-red-600' ? '#dc2626' : goal.color === 'text-green-600' ? '#16a34a' : goal.color === 'text-blue-600' ? '#2563eb' : '#db2777'}" id="res-${goal.id}">₹0</p>
                                 <button onclick="downloadCard('card-${goal.id}', 'name-${goal.id}', '${goal.title} Plan', 'fas ${goal.icon}')" class="download-btn mt-4 w-full bg-black text-white py-2 rounded-lg hover:bg-slate-800 transition text-sm"><i class="fas fa-download mr-2"></i>Download Plan</button>
                             </div>
                         </div>
@@ -704,7 +764,7 @@
 
             const element = document.getElementById(elementId);
             const btn = element.querySelector('.download-btn');
-            const inputsDiv = element.querySelector('.bg-slate-50');
+            const inputsDiv = element.querySelector('.p-3.rounded-lg'); // Select the div wrapping input
             
             // Validate: check if title overlay already exists
             const existingOverlay = document.getElementById('temp-title-overlay');
@@ -773,18 +833,18 @@
         function renderTestimonials() {
             const container = document.getElementById('testimonials-grid');
             container.innerHTML = testimonials.map(t => `
-                <div class="bg-white p-6 rounded-xl shadow-md ${t.border} border-2 hover:shadow-lg transition-shadow duration-300 testimonial-card">
-                    <div class="h-full bg-white rounded-xl p-4">
+                <div class="testimonial-card ${t.border} border-2 hover:shadow-lg transition-shadow duration-300">
+                    <div class="h-full rounded-xl p-4">
                         <div class="flex text-yellow-400 mb-3">
                             ${'<i class="fas fa-star"></i>'.repeat(t.rating)}
                         </div>
-                        <p class="text-slate-600 mb-4 italic">"${t.msg}"</p>
+                        <p class="text-slate-600 mb-4 italic" style="color: var(--text-color); opacity: 0.8;">"${t.msg}"</p>
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center font-bold text-slate-600">
+                            <div class="w-10 h-10 bg-slate-200 dark:bg-slate-700 rounded-full flex items-center justify-center font-bold text-slate-600 dark:text-slate-300">
                                 ${t.name.charAt(0)}
                             </div>
                             <div>
-                                <p class="font-bold text-black text-sm">${t.name}</p>
+                                <p class="font-bold text-sm" style="color: var(--text-color);">${t.name}</p>
                                 <p class="text-xs text-slate-500"><i class="fas fa-map-marker-alt mr-1"></i>${t.loc}</p>
                             </div>
                         </div>
