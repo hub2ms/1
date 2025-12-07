@@ -94,8 +94,8 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            animation: rainbow_move 4s linear infinite;
-            font-weight: 700;
+            animation: rainbow_move 3s linear infinite; /* Faster animation for attention */
+            font-weight: 800;
         }
         @keyframes rainbow_move {
             0% { background-position: 0% 50%; }
@@ -218,7 +218,7 @@
                 <div class="flex flex-col cursor-pointer group nav-item-dynamic" onclick="switchTab('home')">
                     <h1 class="text-2xl font-bold leading-none tracking-tight transition-colors duration-500" style="color: inherit;">MOONSHOT FINSERV</h1>
                     <!-- Dynamic Multi-Color Subheading (Always Highlighted) -->
-                    <p class="text-sm font-medium mt-1 dynamic-text-highlight"> Your Empathic Mutual Fund Partner</p>
+                    <p class="text-sm font-bold mt-1 dynamic-text-highlight"> Your Empathic Mutual Fund Partner</p>
                 </div>
 
                 <!-- Desktop Menu -->
@@ -304,7 +304,7 @@
                     <!-- Left: Portrait Image (Centered Middle, No Caption) -->
                     <div class="flex justify-center h-full items-center">
                         <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white max-w-sm w-full transition-transform hover:scale-105 duration-500">
-                            <!-- Using png first as requested, fallback to jpg -->
+                            <!-- Attempting to use .png as requested, fallback to jpg -->
                             <img src="Moonshot_Portrait.png" alt="Moonshot Finserv" class="w-full h-auto object-cover" onerror="this.src='Moonshot_Portrait.jpg'"> 
                         </div>
                     </div>
@@ -329,7 +329,7 @@
                                 <div class="flex items-center gap-2"><i class="fas fa-car text-red-500"></i> New Vehicle</div>
                                 <div class="flex items-center gap-2"><i class="fas fa-home text-green-500"></i> Dream Home</div>
                                 <div class="flex items-center gap-2"><i class="fas fa-graduation-cap text-blue-500"></i> Children's Education</div>
-                                <div class="flex items-center gap-2"><i class="fas fa-rings text-pink-500"></i> Marriage Expenses</div>
+                                <div class="flex items-center gap-2"><i class="fas fa-ring text-pink-500"></i> Marriage Expenses</div>
                                 <div class="flex items-center gap-2"><i class="fas fa-plane-departure text-orange-500"></i> Family Vacation</div>
                                 <div class="flex items-center gap-2"><i class="fas fa-gift text-purple-500"></i> Gifting</div>
                                 <div class="flex items-center gap-2"><i class="fas fa-umbrella-beach text-teal-500"></i> Retirement Planning</div>
@@ -562,7 +562,7 @@
                     <p class="mb-2">AMFI Registered Mutual Fund Distributor | ARN: 308898</p>
                     <p>Mutual Fund investments are subject to market risks, read all scheme related documents carefully. The NAVs of the schemes may go up or down depending upon the factors and forces affecting the securities market including the fluctuations in the interest rates. The past performance of the mutual funds is not necessarily indicative of future performance of the schemes.</p>
                 </div>
-                <p class="text-xs opacity-80">&copy; 2024 Moonshot Finserv. All rights reserved.</p>
+                <p class="text-slate-600 text-xs">&copy; 2024 Moonshot Finserv. All rights reserved.</p>
                 
                 <!-- Visitor Counter -->
                 <div class="mt-6 flex justify-end items-center opacity-70 hover:opacity-100 transition-opacity">
@@ -620,6 +620,9 @@
                 item.style.transform = `translateX(${x}px) translateY(${y}px)`;
             });
         }
+        
+        // Add event listener for mousemove
+        document.addEventListener('mousemove', animateMenu);
 
         // --- Format Currency ---
         const formatINR = (val) => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(val);
