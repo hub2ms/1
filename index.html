@@ -28,6 +28,7 @@
             --footer-text: #ffffff;
             --input-bg: #ffffff;
             --input-border: #e2e8f0;
+            --mobile-menu-hover: #f3f4f6;
         }
 
         body.dark-mode {
@@ -41,6 +42,7 @@
             --footer-text: #94a3b8;
             --input-bg: #334155;
             --input-border: #475569;
+            --mobile-menu-hover: #334155;
         }
 
         /* Global Settings */
@@ -88,6 +90,16 @@
             width: 100%;
         }
         .nav-link.active-nav {
+            color: #2563eb;
+        }
+        
+        /* Mobile Menu specific styles */
+        .mobile-nav-btn {
+            color: var(--nav-text);
+            transition: background-color 0.3s;
+        }
+        .mobile-nav-btn:hover {
+            background-color: var(--mobile-menu-hover);
             color: #2563eb;
         }
 
@@ -195,6 +207,7 @@
         /* Nav & Footer Theme Colors */
         nav { background-color: var(--nav-bg) !important; color: var(--nav-text); }
         footer { background-color: var(--footer-bg) !important; color: var(--footer-text) !important; }
+        
         .theme-toggle-btn {
             background: none;
             border: none;
@@ -222,7 +235,7 @@
                 <!-- Logo / Company Name Area -->
                 <div class="flex flex-col cursor-pointer group nav-item-dynamic" onclick="switchTab('home')">
                     <h1 class="text-2xl font-bold leading-none tracking-tight transition-colors duration-500" style="color: inherit;">MOONSHOT FINSERV</h1>
-                    <!-- Dynamic Multi-Color Subheading -->
+                    <!-- Dynamic Multi-Color Subheading (Always Highlighted) -->
                     <p class="text-sm font-bold mt-1 dynamic-text-highlight"> Your Empathic Mutual Fund Partner</p>
                 </div>
 
@@ -247,22 +260,22 @@
                     <button onclick="toggleTheme()" class="theme-toggle-btn" title="Toggle Theme">
                         <i class="fas fa-moon" id="theme-icon-mobile"></i>
                     </button>
-                    <button onclick="toggleMobileMenu()" class="text-current p-2 hover:bg-opacity-10 rounded-lg transition-colors">
+                    <button onclick="toggleMobileMenu()" class="text-current p-2 hover:bg-opacity-10 rounded-lg transition-colors" style="color: var(--nav-text)">
                         <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
             </div>
         </div>
         <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-slate-800 border-t border-slate-100 dark:border-slate-700 shadow-xl">
+        <div id="mobile-menu" class="hidden lg:hidden border-t shadow-xl" style="background-color: var(--nav-bg); border-color: var(--card-border);">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <button onclick="switchTab('home'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-opacity-10 rounded-md font-medium">Home</button>
-                <button onclick="switchTab('about'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-opacity-10 rounded-md font-medium">About</button>
-                <button onclick="switchTab('calculators'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-opacity-10 rounded-md font-medium">Calculators</button>
-                <button onclick="switchTab('customers'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-opacity-10 rounded-md font-medium">Customers</button>
-                <button onclick="switchTab('compliance'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-opacity-10 rounded-md font-medium">Compliance</button>
-                <button onclick="switchTab('career'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-opacity-10 rounded-md font-medium">Career</button>
-                <button onclick="switchTab('contact'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 hover:bg-opacity-10 rounded-md font-medium">Contact</button>
+                <button onclick="switchTab('home'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md font-medium mobile-nav-btn">Home</button>
+                <button onclick="switchTab('about'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md font-medium mobile-nav-btn">About</button>
+                <button onclick="switchTab('calculators'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md font-medium mobile-nav-btn">Calculators</button>
+                <button onclick="switchTab('customers'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md font-medium mobile-nav-btn">Customers</button>
+                <button onclick="switchTab('compliance'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md font-medium mobile-nav-btn">Compliance</button>
+                <button onclick="switchTab('career'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md font-medium mobile-nav-btn">Career</button>
+                <button onclick="switchTab('contact'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-md font-medium mobile-nav-btn">Contact</button>
             </div>
         </div>
     </nav>
@@ -309,6 +322,7 @@
                     <!-- Left: Portrait Image (Centered Middle, No Caption) -->
                     <div class="flex justify-center h-full items-center">
                         <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-700 max-w-sm w-full transition-transform hover:scale-105 duration-500">
+                            <!-- Using png first as requested, fallback to jpg -->
                             <img src="Moonshot_Portrait.png" alt="Moonshot Finserv" class="w-full h-auto object-cover" onerror="this.src='Moonshot_Portrait.jpg'"> 
                         </div>
                     </div>
