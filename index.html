@@ -163,7 +163,19 @@
             background-color: var(--input-bg);
             color: var(--text-color);
         }
-        
+        .input-field:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
         nav { background-color: var(--nav-bg) !important; color: var(--nav-text); }
         footer { background-color: var(--footer-bg) !important; color: var(--footer-text) !important; }
         
@@ -195,7 +207,7 @@
         body.dark-mode .text-black { color: #ffffff; }
     </style>
 </head>
-<body class="flex flex-col min-h-screen font-inter" onmousemove="animateMenu(event)">
+<body class="flex flex-col min-h-screen font-inter">
 
     <!-- Navigation -->
     <nav class="shadow-md sticky top-0 z-50 transition-all duration-300">
@@ -308,16 +320,16 @@
                     <div class="grid lg:grid-cols-2 gap-12 items-center h-full">
                         <div class="flex justify-center h-full items-center">
                             <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-700 max-w-sm w-full transition-transform hover:scale-105 duration-500">
-                                <img src="Moonshot_Portrait.jpg" alt="Moonshot Finserv" class="w-full h-auto object-cover" onerror="this.src='Moonshot_Portrait.jpg'"> 
+                                <img src="Moonshot_Portrait.jpg" alt="Moonshot Finserv" class="w-full h-auto object-cover" onerror="this.src='https://placehold.co/400x600?text=Moonshot+Portrait'">
                             </div>
                         </div>
                         <div class="space-y-8">
-                            <div class="calc-card border-blue-300">
+                            <div class="calc-card border-blue-300" style="border-color: #93c5fd;">
                                 <h3 class="text-xl font-bold mb-2">OUR PURPOSE</h3>
                                 <p class="text-lg italic">"We guide your family financially."</p>
                                 <p class="text-lg italic">"Dream big, yet start smart."</p>
                             </div>
-                            <div class="calc-card border-purple-300">
+                            <div class="calc-card border-purple-300" style="border-color: #d8b4fe;">
                                 <h3 class="text-xl font-bold mb-4">OUR VISION</h3>
                                 <p class="text-lg mb-4 italic">"To empower clients to achieve financial goals through mutual fund investment."</p>
                                 <div class="grid grid-cols-2 gap-4 text-sm italic opacity-80">
@@ -330,7 +342,7 @@
                                     <div class="flex items-center gap-2"><i class="fas fa-umbrella-beach text-teal-500"></i> Retirement</div>
                                 </div>
                             </div>
-                            <div class="calc-card border-yellow-300">
+                            <div class="calc-card border-yellow-300" style="border-color: #fde047;">
                                 <h3 class="text-xl font-bold mb-2">OUR MISSION</h3>
                                 <p class="text-xl italic">"To be client's Empathic Mutual Fund Partner in balancing Risk and Reward."</p>
                             </div>
@@ -350,7 +362,62 @@
             <div id="fs-calculators" class="tab-content animate-fade-in">
                 <div class="max-w-7xl mx-auto px-4 py-12">
                     <div class="grid lg:grid-cols-2 gap-8" id="calculator-grid">
-                        <!-- JS renders calculators here -->
+                        <!-- Explicitly added Step Up SIP Calculator -->
+                         <div class="calc-card border-blue-400" id="card-stepup" style="border-color: #60a5fa;">
+                            <div class="flex items-center gap-3 mb-6 border-b pb-4 border-slate-200 dark:border-slate-700">
+                                <div class="p-3 bg-blue-100 rounded-lg text-blue-600"><i class="fas fa-chart-line text-xl"></i></div>
+                                <h3 class="text-xl font-bold calc-title">Step-Up SIP Calculator</h3>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="inputs space-y-3">
+                                    <div><label>Monthly Investment (₹)</label><input type="number" id="inv-stepup" value="5000" class="input-field" oninput="calcStepUp()"></div>
+                                    <div><label>Annual Step-Up (%)</label><input type="number" id="step-stepup" value="10" class="input-field" oninput="calcStepUp()"></div>
+                                    <div><label>Return Rate (%)</label><input type="number" id="rate-stepup" value="12" class="input-field" oninput="calcStepUp()"></div>
+                                    <div><label>Duration (Years)</label><input type="number" id="time-stepup" value="15" class="input-field" oninput="calcStepUp()"></div>
+                                    <div class="p-3 rounded-lg border border-slate-200 dark:border-slate-700 mt-2 inputs-div" style="background-color: var(--bg-color);">
+                                        <label class="text-xs font-bold uppercase">To Download Plan:</label>
+                                        <input type="text" id="name-stepup" placeholder="Your Name" class="input-field mb-2 text-sm">
+                                    </div>
+                                </div>
+                                <div class="results flex flex-col items-center justify-center">
+                                    <div class="w-40 h-40 mb-4"><canvas id="chart-stepup"></canvas></div>
+                                    <div class="text-center w-full">
+                                        <p class="text-sm opacity-70">Maturity Value</p>
+                                        <p class="text-2xl font-bold text-green-600" id="res-stepup">₹0</p>
+                                        <button onclick="downloadCard('card-stepup', 'name-stepup', 'Step-Up SIP Plan', 'fas fa-chart-line')" class="download-btn mt-4 w-full bg-black text-white py-2 rounded-lg hover:bg-slate-800 transition text-sm">Download Plan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Explicitly added Lumpsum Calculator -->
+                        <div class="calc-card border-purple-400" id="card-lumpsum" style="border-color: #c084fc;">
+                            <div class="flex items-center gap-3 mb-6 border-b pb-4 border-slate-200 dark:border-slate-700">
+                                <div class="p-3 bg-purple-100 rounded-lg text-purple-600"><i class="fas fa-money-bill-wave text-xl"></i></div>
+                                <h3 class="text-xl font-bold calc-title">Lumpsum Calculator</h3>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="inputs space-y-3">
+                                    <div><label>Total Investment (₹)</label><input type="number" id="inv-lumpsum" value="100000" class="input-field" oninput="calcLumpsum()"></div>
+                                    <div><label>Return Rate (%)</label><input type="number" id="rate-lumpsum" value="12" class="input-field" oninput="calcLumpsum()"></div>
+                                    <div><label>Duration (Years)</label><input type="number" id="time-lumpsum" value="10" class="input-field" oninput="calcLumpsum()"></div>
+                                    <div class="p-3 rounded-lg border border-slate-200 dark:border-slate-700 mt-2 inputs-div" style="background-color: var(--bg-color);">
+                                        <label class="text-xs font-bold uppercase">To Download Plan:</label>
+                                        <input type="text" id="name-lumpsum" placeholder="Your Name" class="input-field mb-2 text-sm">
+                                    </div>
+                                </div>
+                                <div class="results flex flex-col items-center justify-center">
+                                    <div class="w-40 h-40 mb-4"><canvas id="chart-lumpsum"></canvas></div>
+                                    <div class="text-center w-full">
+                                        <p class="text-sm opacity-70">Maturity Value</p>
+                                        <p class="text-2xl font-bold text-green-600" id="res-lumpsum">₹0</p>
+                                        <button onclick="downloadCard('card-lumpsum', 'name-lumpsum', 'Lumpsum Plan', 'fas fa-money-bill-wave')" class="download-btn mt-4 w-full bg-black text-white py-2 rounded-lg hover:bg-slate-800 transition text-sm">Download Plan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- JS renders other goal calculators here -->
                     </div>
                 </div>
             </div>
@@ -444,7 +511,7 @@
                                 </div>
                                 <div class="flex justify-center">
                                      <div class="relative rounded-2xl overflow-hidden shadow-xl border-4 border-white dark:border-slate-700 max-w-sm w-full">
-                                        <img src="Moonshot_Portrait.jpg" alt="Moonshot Finserv" class="w-full h-auto object-cover" onerror="this.src='Moonshot_Portrait.jpg'"> 
+                                        <img src="Moonshot_Portrait.jpg" alt="Moonshot Finserv" class="w-full h-auto object-cover" onerror="this.src='https://placehold.co/400x600?text=Moonshot+Portrait'"> 
                                     </div>
                                 </div>
                             </div>
@@ -477,37 +544,37 @@
                  <div class="max-w-5xl mx-auto px-4 py-16">
                     <h2 class="text-3xl font-bold text-center mb-12">Stationery Shop</h2>
                     <div class="grid md:grid-cols-2 gap-8">
-                        <div class="info-card border-blue-300">
+                        <div class="info-card border-blue-300" style="border-color: #93c5fd;">
                             <h3 class="text-xl font-bold mb-4 text-blue-600">Writing Instruments</h3>
                             <ul class="list-disc pl-5 opacity-80 space-y-2">
                                 <li>Pens, Pencils</li><li>Markers, Highlighters</li><li>Calligraphy Sets</li>
                             </ul>
                         </div>
-                        <div class="info-card border-green-300">
+                        <div class="info-card border-green-300" style="border-color: #86efac;">
                             <h3 class="text-xl font-bold mb-4 text-green-600">Paper Products</h3>
                             <ul class="list-disc pl-5 opacity-80 space-y-2">
                                 <li>Notebooks, Diaries</li><li>Loose Paper, Art Paper</li><li>Chart Paper</li>
                             </ul>
                         </div>
-                        <div class="info-card border-purple-300">
+                        <div class="info-card border-purple-300" style="border-color: #d8b4fe;">
                             <h3 class="text-xl font-bold mb-4 text-purple-600">Desk Accessories</h3>
                             <ul class="list-disc pl-5 opacity-80 space-y-2">
                                 <li>Adhesives, Fasteners</li><li>Cutting Tools, Organizers</li><li>Calculators</li>
                             </ul>
                         </div>
-                        <div class="info-card border-orange-300">
+                        <div class="info-card border-orange-300" style="border-color: #fdba74;">
                             <h3 class="text-xl font-bold mb-4 text-orange-600">Files & Mgmt</h3>
                             <ul class="list-disc pl-5 opacity-80 space-y-2">
                                 <li>Zipper Bags, Stick Files</li><li>Button Folders</li><li>Report Files</li>
                             </ul>
                         </div>
-                        <div class="info-card border-pink-300">
+                        <div class="info-card border-pink-300" style="border-color: #fca5a5;">
                             <h3 class="text-xl font-bold mb-4 text-pink-600">School Essentials</h3>
                             <ul class="list-disc pl-5 opacity-80 space-y-2">
                                 <li>Geometry Sets</li><li>Erasers, Sharpeners</li><li>Exam Pads, Labels</li>
                             </ul>
                         </div>
-                         <div class="info-card border-yellow-300">
+                         <div class="info-card border-yellow-300" style="border-color: #fde047;">
                             <h3 class="text-xl font-bold mb-4 text-yellow-600">Art & Craft</h3>
                             <ul class="list-disc pl-5 opacity-80 space-y-2">
                                 <li>Acrylic Colors</li><li>Oil Pastels</li><li>Wax Crayons</li>
@@ -522,19 +589,19 @@
                  <div class="max-w-5xl mx-auto px-4 py-16">
                     <h2 class="text-3xl font-bold text-center mb-12">Library & Bookshop</h2>
                     <div class="grid md:grid-cols-3 gap-8">
-                         <div class="info-card border-teal-300">
+                         <div class="info-card border-teal-300" style="border-color: #5eead4;">
                             <h3 class="text-xl font-bold mb-4 text-teal-600">Periodicals</h3>
                             <ul class="list-disc pl-5 opacity-80 space-y-2">
                                 <li>Kids Magazines</li><li>Journals</li><li>Weekly Digests</li>
                             </ul>
                         </div>
-                        <div class="info-card border-indigo-300">
+                        <div class="info-card border-indigo-300" style="border-color: #a5b4fc;">
                             <h3 class="text-xl font-bold mb-4 text-indigo-600">Reference</h3>
                             <ul class="list-disc pl-5 opacity-80 space-y-2">
                                 <li>Encyclopedias</li><li>Self-help Books</li><li>Dictionaries</li>
                             </ul>
                         </div>
-                        <div class="info-card border-rose-300">
+                        <div class="info-card border-rose-300" style="border-color: #fda4af;">
                             <h3 class="text-xl font-bold mb-4 text-rose-600">Kids Special</h3>
                             <ul class="list-disc pl-5 opacity-80 space-y-2">
                                 <li>Sticker Books</li><li>Story Books</li><li>Activity Books</li>
@@ -546,7 +613,6 @@
 
             <!-- Info Contact (Duplicated) -->
             <div id="ic-contact" class="tab-content animate-fade-in">
-                <!-- Reusing the rainbow border contact logic structure via JS rendering or just static here -->
                 <div class="max-w-7xl mx-auto px-4 py-16">
                     <div class="rainbow-border-box">
                         <div class="rainbow-inner p-8 lg:p-12">
@@ -577,7 +643,7 @@
                                 </div>
                                 <div class="flex justify-center">
                                      <div class="relative rounded-2xl overflow-hidden shadow-xl border-4 border-white dark:border-slate-700 max-w-sm w-full">
-                                        <img src="Moonshot_Portrait.jpg" alt="Moonshot Info Club" class="w-full h-auto object-cover" onerror="this.src='Moonshot_Portrait.jpg'"> 
+                                        <img src="Moonshot_Portrait.jpg" alt="Moonshot Info Club" class="w-full h-auto object-cover" onerror="this.src='https://placehold.co/400x600?text=Moonshot+Portrait'"> 
                                     </div>
                                 </div>
                             </div>
@@ -735,6 +801,8 @@
                 item.style.transform = `translateX(${x}px) translateY(${y}px)`;
             });
         }
+        
+        document.addEventListener('mousemove', animateMenu);
 
         // --- Finserv Logic (Same as before) ---
         const formatINR = (val) => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(val);
@@ -787,7 +855,7 @@
             if(!container) return;
             goalCalculators.forEach(goal => {
                 const html = `
-                <div class="calc-card ${goal.border}" id="card-${goal.id}">
+                <div class="calc-card ${goal.border}" id="card-${goal.id}" style="border-color: ${goal.border.includes('red') ? '#fca5a5' : goal.border.includes('green') ? '#86efac' : goal.border.includes('blue') ? '#93c5fd' : '#f9a8d4'}">
                     <div class="flex items-center gap-3 mb-6 border-b pb-4 border-slate-200 dark:border-slate-700">
                         <div class="p-3 rounded-lg ${goal.bg}"><i class="fas ${goal.icon} text-xl ${goal.color}"></i></div>
                         <h3 class="text-xl font-bold calc-title">${goal.title}</h3>
@@ -886,7 +954,7 @@
             const container = document.getElementById('testimonials-grid');
             if(!container) return;
             container.innerHTML = testimonials.map(t => `
-                <div class="testimonial-card ${t.border} border-2 hover:shadow-lg transition-shadow duration-300">
+                <div class="testimonial-card ${t.border} border-2 hover:shadow-lg transition-shadow duration-300" style="border-color: ${t.border.includes('red') ? '#fca5a5' : t.border.includes('orange') ? '#fdba74' : t.border.includes('amber') ? '#fcd34d' : t.border.includes('yellow') ? '#fde047' : t.border.includes('lime') ? '#bef264' : t.border.includes('green') ? '#86efac' : t.border.includes('emerald') ? '#6ee7b7' : t.border.includes('teal') ? '#5eead4' : t.border.includes('cyan') ? '#67e8f9' : t.border.includes('sky') ? '#7dd3fc' : t.border.includes('blue') ? '#93c5fd' : t.border.includes('indigo') ? '#a5b4fc' : t.border.includes('violet') ? '#c4b5fd' : t.border.includes('purple') ? '#d8b4fe' : t.border.includes('fuchsia') ? '#f0abfc' : t.border.includes('pink') ? '#f9a8d4' : '#fda4af'}">
                     <div class="h-full rounded-xl p-4">
                         <div class="flex text-yellow-400 mb-3">${'<i class="fas fa-star"></i>'.repeat(t.rating)}</div>
                         <p class="mb-4 italic opacity-80">"${t.msg}"</p>
@@ -910,4 +978,3 @@
     </script>
 </body>
 </html>
-
